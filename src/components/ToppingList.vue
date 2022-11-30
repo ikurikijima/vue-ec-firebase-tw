@@ -1,49 +1,40 @@
 <template>
   <div>
     
-    <div v-for="option in options" :key="option.id">
-      <label>
-        <input
+    <!-- <div v-for="option in options" :key="option.id">
+      <label> -->
+        <!-- <input
           type="checkbox"
           id="options.id"
           v-model="choiceOption"
           :value="option"
-        />
-        {{ option.name }}</label>
+        /> -->
+        <!-- {{ option.name }}</label> -->
       <!-- <p>{{ option }}</p> -->
-    </div>
+    <!-- </div> -->
     <!-- <p>{{ choiceOption }}</p> -->
-    <h3> トッピング合計：{{ toppingTotal }}円</h3>
-    <router-link to="/cart">
+    <!-- <h3> トッピング合計：{{ toppingTotal }}円</h3>
+    <router-link to="cart">
     <button>カートに追加</button>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
 <script>
-import axios from "axios";
+
 
 export default {
   data() {
     return {
-      options: [],
-      choiceOption: [],
+      // options: [],
+      // choiceOption: [],
     };
   },
-  mounted() {
-    axios
-      .get("http://localhost:3000/options")
-      .then((re) => {
-        this.options = re.data;
-        console.log(re);
-      })
-      .catch((err) => console.log(error));
-  },
-  computed: {
-    toppingTotal: function () {
-      return this.choiceOption.length * 100;
-    },
-  },
+//   computed: {
+//     toppingTotal: function () {
+//       return this.choiceOption.length * 100;
+//     },
+//   },
 };
 </script>
 

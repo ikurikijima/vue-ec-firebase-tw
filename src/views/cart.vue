@@ -22,9 +22,8 @@
 </template>
 
 <script>
-import axios from "axios";
 
-const carturl = "http://localhost:8000/orderItems";
+import firebase from "@/firebase/firebase"
 
 export default {
   data() {
@@ -35,15 +34,16 @@ export default {
       total: 0,
     };
   },
-  mounted() {
-    // this.orderItemsにデータを格納
-    axios
-      .get("http://localhost:3000/orderItems")
-      .then((re) => {
-        this.orderItems = re.data;
-        // consoleƒ.log(re.data.orderItems);
-      })
-      .catch((err) => console.log(error));
+  async created() {
+    const orderItemsRef = firebase.firestore().collection("orderItems")
+    // console.log("orderItemsRef",orderItemsRef);//OK
+    const snapshot = await orderItemsRef.get();
+    // console.log("snapshot", snapshot);OK
+
+    snapshot.forEach(doc => {
+      // console.log("はい",doc.data()); //OK
+      this.orderItems.push(doc.data())
+    })
   },
   computed: {
     // 合計金額をtotalに格納

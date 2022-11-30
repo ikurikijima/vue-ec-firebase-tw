@@ -26,6 +26,8 @@
   <h4>あああああああああああ</h4>
 </template>
 
+
+
 <script>
 import axios from "axios";
 import firebase from "@/firebase/firebase";
@@ -51,15 +53,14 @@ export default {
   },
   methods: {
     async getRooms() {
-      this.items = [];
       const itemDetailsRef = firebase.firestore().collection("items");
       console.log("itemDetailsRef   1", itemDetailsRef); //OK
       const snapshot = await itemDetailsRef.get();
       console.log("snapshot  2", snapshot); //OK
 
       snapshot.forEach((doc) => {
-        console.log(doc.data());
-        this.orderItems.push(doc.data());
+        console.log("でてる？？",doc.data());
+        this.items.push(doc.data());
       });
     },
   },

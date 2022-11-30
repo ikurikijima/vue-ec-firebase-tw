@@ -1,8 +1,12 @@
 <template>
   <!-- <div v-for="item in items" :key="item.id"> -->
   <div>
+    <h1>商品詳細</h1>
+    <h1>{{ detail.name }}</h1>
+    <img :src="`../../${detail.imagePath}`" alt="pizza" />
+    <h1>{{ detail.description }}</h1>
     <!-- <h1>{{ $route.params }}</h1> -->
-    <h1>{{ item.name }}</h1>
+    <!-- <h1>{{ item.name }}</h1>
     <img :src="`../../${item.imagePath}`" alt="ピザ" />
     <p>{{ item.description }}</p>
     <input
@@ -21,9 +25,9 @@
       defalutChecked 
       />
     <span>{{ item.priceL }}</span>
-    <button v-on="click"></button>
+    <button v-on="click"></button> -->
     <!-- <h1 style="margin-top:100px;">{{ $route.params.name }}</h1> -->
-    <ToppingList></ToppingList>
+    <!-- <ToppingList></ToppingList> -->
   </div>
   <!-- </div> -->
 </template>
@@ -32,45 +36,35 @@
 // import axios from "axios";
 import ToppingList from "/Users/ikuri/vue-ec/src/components/ToppingList.vue";
 
+import firebase from "@/firebase/firebase";
+
 // console.log(item);
 // const pizza = params.id;
 export default {
   components: {
-    ToppingList,
+    // ToppingList,
   },
   data() {
     return {
       item: [],
+      deteliname: null,
+      detail: [],
+      id:"", //URL
     };
   },
-  mounted: async function () {
-    const id = this.$route.params.id;
-    // console.log(id);
-    const detailData = await fetch(`http://localhost:3000/items/${id}`);
-    const json = await detailData.json();
-    this.item = json;
-    // console.log(this.item);
-  },
-  methods: {
-    click: function () {
-      console.log(value);
-    },
-  },
-  // console.log(item);
-  // axios
-  //   .get("/db.json")
-  //   .then((re) => {
-  //     this.items = re.data.items;
-  //     console.log(re.data.items);
-  //   })
-  //   .catch((err) => console.log(error));
-  // props: {
-  //   id: Number,
-  //   name: String,
-  //   imagePath: String,
-  //   description: String,
-  //   proce: Number
-  // }
+  async created() {
+    this.id = this.$route.params["id"];
+    // console.log("id", this.id); //OK
+
+    const idRef = firebase.firestore().collection("items").doc(this.id);
+    // console.log("idRef", idRef); //OK
+    const idDoc = await idRef.get();
+    // if(!idDoc.exists){
+    //   this.$router.push("/home");
+    // }
+    this.detail = idDoc.data();
+    console.log("id", this.detail);
+  }
 };
 </script>
 
