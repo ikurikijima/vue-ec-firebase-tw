@@ -6,8 +6,7 @@
     <img :src="`../../${detail.imagePath}`" alt="pizza" />
     <h1>{{ detail.description }}</h1>
     <!-- <h1>{{ $route.params }}</h1> -->
-    <!-- <h1>{{ item.name }}</h1>
-    <img :src="`../../${item.imagePath}`" alt="ピザ" />
+    <h1>{{ item.name }}s</h1>
     <p>{{ item.description }}</p>
     <input
       type="radio"
@@ -25,11 +24,11 @@
       defalutChecked 
       />
     <span>{{ item.priceL }}</span>
-    <button v-on="click"></button> -->
-    <!-- <h1 style="margin-top:100px;">{{ $route.params.name }}</h1> -->
-    <!-- <ToppingList></ToppingList> -->
+    <br>
+    <button v-on="click">カートへ入れる</button>
+    <h1 style="margin-top:100px;">{{ $route.params.name }}</h1>
+    <ToppingList></ToppingList>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -49,22 +48,26 @@ export default {
       item: [],
       deteliname: null,
       detail: [],
-      id:"", //URL
+      id: "", //URL
     };
   },
   async created() {
     this.id = this.$route.params["id"];
-    // console.log("id", this.id); //OK
+    console.log("id", this.id); //OK
 
     const idRef = firebase.firestore().collection("items").doc(this.id);
-    // console.log("idRef", idRef); //OK
-    const idDoc = await idRef.get();
+    console.log("idRef", idRef); //OK
+    const snapshot = await idRef.get();
     // if(!idDoc.exists){
     //   this.$router.push("/home");
-    // }
-    this.detail = idDoc.data();
+    // // }
+    console.log("snapshot", snapshot);
+
+    this.detail = snapshot.data();
     console.log("id", this.detail);
-  }
+
+    // this.detail = idDoc.data();
+  },
 };
 </script>
 

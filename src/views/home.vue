@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       items: [],
+      data:[]
     };
   },
   //   methods:{
@@ -59,9 +60,13 @@ export default {
       console.log("snapshot  2", snapshot); //OK
 
       snapshot.forEach((doc) => {
-        console.log("でてる？？",doc.data());
-        this.items.push(doc.data());
+
+        const data = {...doc.data()}
+        data.id = doc.id
+        console.log("でてる？？",data);
+        this.items.push(data);
       });
+      console.log(this.data);
     },
   },
 };
