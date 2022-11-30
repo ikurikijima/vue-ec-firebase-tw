@@ -1,0 +1,18 @@
+{
+  "name": "axios_app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "json-server": "^0.17.1",
+    "vue": "^3.0.4",
+    "vue-axios": "^3.5.2"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.4",
+    "vite": "^1.0.0-rc.13"
+  }
+}
