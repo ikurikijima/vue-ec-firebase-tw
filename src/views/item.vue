@@ -5,9 +5,6 @@
     <h1>{{ detail.name }}</h1>
     <img :src="`../../${detail.imagePath}`" alt="pizza" />
     <h1>{{ detail.description }}</h1>
-    <!-- <h1>{{ $route.params }}</h1> -->
-    <h1>{{ item.name }}s</h1>
-    <p>{{ item.description }}</p>
     <input
       type="radio"
       name="sizeChoice"
@@ -15,7 +12,7 @@
       onChange
       defalutChecked
     />
-    <span>{{ item.priceM }}</span>
+    <span>{{ detail.priceM }}</span>
     <input 
       type="radio" 
       name="sizeChoice" 
@@ -23,10 +20,10 @@
       onChange 
       defalutChecked 
       />
-    <span>{{ item.priceL }}</span>
+    <span>{{ detail.priceL }}</span>
     <br>
     <button v-on="click">カートへ入れる</button>
-    <h1 style="margin-top:100px;">{{ $route.params.name }}</h1>
+<div>{{ detail }}</div>
     <ToppingList></ToppingList>
   </div>
 </template>

@@ -2,6 +2,7 @@
   <div>
     <div class="waku">
       <div v-for="item in items" :key="item.name" class="item">
+    <div>{{ item.id }}</div>
         <router-link
           :to="{
             name: 'item',
@@ -66,7 +67,7 @@ export default {
         console.log("でてる？？",data);
         this.items.push(data);
       });
-      console.log(this.data);
+      console.log("確認",this.items);
     },
   },
 };

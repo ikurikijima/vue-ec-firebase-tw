@@ -66,6 +66,11 @@ const routes = [
     //   // price:route.params.price
     // })
   },
+  {
+    path: '/Thankyou',
+    name: 'Thankyou',
+    component: () => import('../views/Thankyou.vue')
+  },
 ]
 
 const router = createRouter({
