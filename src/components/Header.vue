@@ -5,24 +5,55 @@
       <span>|</span>
       <span><router-link to="/home">Home</router-link></span>
       <span>|</span>
-      <span><router-link to="/about">About</router-link></span>
-      <span>|</span>
-      <span><router-link to="/page1">Page1</router-link></span>
-      <span>|</span>
       <span><router-link to="/cart">cart</router-link></span>
       <span>|</span>
-      <span><router-link to="/id">item</router-link></span>
+      <span><router-link to="/mypage">MyPage</router-link></span>
       <span>|</span>
+      <span><router-link to="/signup">SignUp</router-link></span>
+      <span>|</span>
+      <span><router-link to="/login">Login</router-link></span>
+      <span>|</span>
+      
+      <span>ようこそ　{{authenticatedUser ? auth && auth.displayName : "ゲスト"}}　さん</span>
+      <button @click="logoutUser" v-if="authenticatedUser">logout</button>
     </div>
+
   </header>
 </template>
 
 <script>
-// export default {
-//   data: function () {
-//     return;
-//   },
-// };
+  import  firebase  from "@/firebase/firebase";
+
+export default {
+  data() {
+    return {
+      // auth: firebase.auth().currentUser.email,
+      authenticatedUser:"",
+
+    }
+  },
+  methods: {
+    logoutUser() {
+      firebase.auth().signOut();
+    }
+  },
+  mounted() {
+    //ログインしていればthis.authにデータが格納される
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user) {
+      console.log("LOGIN");
+      this.auth = JSON.parse(sessionStorage.getItem("user"))
+      this.authenticatedUser = true;
+    } else {
+      console.log("LOGOUT");
+      this.authenticatedUser = false;
+    }
+  })
+
+  },
+  
+}
 </script>
 
 <style lang="scss">

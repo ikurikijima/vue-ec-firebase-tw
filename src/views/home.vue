@@ -15,8 +15,8 @@
           <img :src="`../../${item.imagePath}`" alt="ピザ" />
           <div class="name">{{ item.name }}</div>
         </router-link>
-        <div class="plice">{{ item.priceM }}</div>
-        <div class="plice">{{ item.priceL }}</div>
+        <div class="plice">¥{{ item.priceM.toLocaleString()}}</div>
+        <div class="plice">¥{{ item.priceL.toLocaleString() }}</div>
         <div v-for="option in options" :key="option.id"></div>
         <!-- <button type="button" @click="itemd(item.id)">詳細</button> -->
         <!-- <span>説明：{{ item.description }}</span><br> -->

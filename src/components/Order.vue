@@ -1,35 +1,25 @@
 <template>
-  <div>
-    <h1>注文詳細画面</h1>
-
-    <div v-for="orderItem in orderItems" :key="orderItem">
+    <div>
+    <div v-for="(orderItem) in orderItems" :key="orderItem">
       <div>
         <img :src="`../../${orderItem.imagePath}`" alt="" />
         <p>{{ orderItem.name }}</p>
       </div>
       <div id="size">{{ orderItem.size }}</div>
       <div>{{ orderItem.price }}</div>
-       <div>¥{{ orderItem.price.toLocaleString() }}</div>
-        <h3 v-if="orderItem.orderToppingList.length !== 0">プラストッピング</h3>
-        <div
-          v-for="toppingList in orderItem.orderToppingList"
-          :key="toppingList"
-        >
-          <span>＋　{{ toppingList.name }}</span>
-          <span>¥200</span>
-        </div>
-      </div>
-      <h2>小計: ¥{{ totalPrice.toLocaleString() }}円</h2>
-      <h1>合計: ¥{{ totalPrice.toLocaleString() }}円</h1>
-      <h2>内消消費税:¥{{ (totalPrice * 0.1).toLocaleString() }}円</h2>
-    <router-link to="/Thankyou">
-      <button>お届け先住所入力</button>
-    </router-link>
-    <router-link to="/cart">
-      <button>カートへ戻る</button>
+      <div>{{ orderItem.orderToppingList }}</div>
+      <div>{{ orderItem.subTotal }}</div>
+      <p>{{ orderItem.id }}</p>
+
+
+    </div>
+    <h1>合計金額:{{ totalPrice }}円</h1>
+    <router-link to="/order">
+      <button id="btn">お支払いへ進む</button>
     </router-link>
   </div>
 </template>
+
 
 <script>
 import firebase from "@/firebase/firebase";
@@ -49,7 +39,6 @@ export default {
       id: "",
     };
   },
-  
   async created() {
     const orderItemsRef = firebase.firestore().collection("orderItems");
     // console.log("orderItemsRef",orderItemsRef);//OK
@@ -70,7 +59,7 @@ export default {
       this.total = 0;
       console.log(this.orderItems);
       this.orderItems.map((data) => {
-        this.total += data.price;
+        this.total += data.subTotal;
       });
       return this.total;
     },
@@ -90,7 +79,7 @@ export default {
       this.total = 0;
       console.log(this.orderItems);
       this.orderItems.map((data) => {
-        this.total += data.price;
+        this.total += data.subTotal;
       });
       return this.total;
     },
