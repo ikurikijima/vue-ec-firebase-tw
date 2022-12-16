@@ -1,52 +1,87 @@
 <template>
-  <!-- <div v-for="item in items" :key="item.id"> -->
-  <div>
-    <h1>商品詳細</h1>
-    <h1>{{ detail.name }}</h1>
-    <img :src="`../../${detail.imagePath}`" alt="pizza" />
-    <h1>{{ detail.description }}</h1>
-    <input
-      type="radio"
-      name="size"
-      id="priceM"
-      :value="detail.priceM"
-      v-model="size"
-      onChange
-      defalutChecked
-    />
-    <span>{{ detail.priceM }}</span>
-    <input
-      type="radio"
-      name="size"
-      id="priceL"
-      :value="detail.priceL"
-      v-model="size"
-      onChange
-      defalutChecked
-    />
-    <span>{{ detail.priceL }}</span>
-    <br />
-    <div>選択サイズ：{{ size }}</div>
-    <div v-for="option in options" :key="option.id">
-      <label>
-        <input
-          type="checkbox"
-          id="options.id"
-          v-model="choiceOptions"
-          :value="option"
+  <h1>{{ size }}</h1>
+  <section class="text-gray-600 body-font overflow-hidden">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap items-center">
+        <img
+          alt="pizza"
+          class="lg:w-1/2 w-full lg:h-80 h-64 object-cover object-center rounded"
+          :src="`../../${detail.imagePath}`"
         />
-        {{ option.name }}</label
-      >
-      <p>{{ option.price }}</p>
+        <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
+            {{ detail.name }}
+          </h1>
+          <div class="flex mb-4">
+            <span class="flex items-center"> </span>
+          </div>
+          <p class="leading-relaxed">{{ detail.description }}</p>
+          <div
+            class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5"
+          >
+            <div class="flex items-center">
+              <span class="mr-4">サイズ</span>
+
+              <input
+                type="radio"
+                name="size"
+                id="priceM"
+                :value="detail.priceM"
+                v-model="size"
+              />
+              <label for="priceM" class="mr-4"
+                ><span class="mr-2 font-bold">M</span>¥{{
+                  detail.priceM.toLocaleString()
+                }}</label
+              >
+              <input
+                type="radio"
+                name="size"
+                id="priceL"
+                :value="detail.priceL"
+                v-model="size"
+                defalutChecked
+              />
+              <label for="priceL"
+                ><span class="mr-2 font-bold">L</span>¥{{
+                  detail.priceL.toLocaleString()
+                }}</label
+              >
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="flex items-center font-semibold mb-2">
+              プラストッピング　+¥200
+            </div>
+            <div v-for="option in options" :key="option.id" class="flex">
+              <label class="my-0.5 ml-4">
+                <input
+                  type="checkbox"
+                  id="options.id"
+                  v-model="choiceOptions"
+                  :value="option"
+                />
+                {{ option.name }}</label
+              >
+            </div>
+          </div>
+          <div>
+            <span class="title-font font-medium text-2xl text-gray-900"
+              >合計　¥{{ total.toLocaleString() }}</span
+            >
+             <router-link to="/cart"> 
+            <button
+              @click="click()"
+              class="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded"
+            >
+             カートに入れる
+            </button>
+             </router-link>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- 選択したトッピングが入っている↓ -->
-    <h3>トッピング合計：{{ total }}円</h3>
-    <h3>choiseOptions中身：{{ choiceOptions }}円</h3>
-    <router-link to="/cart">
-    <button @click="click()">カートへ入れる</button>
-    </router-link>
-    <h1>{{ detail }}</h1>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -68,7 +103,7 @@ export default {
       detail: [],
       id: "", //URL
       size: "",
-      total: "",
+      total: 0,
     };
   },
   watch: {
@@ -97,6 +132,7 @@ export default {
     // this.detail = idDoc.data();
   },
   mounted() {
+    this.toppingTotal();
     this.getOptions();
     //ここ消す↓
     this.size === "priceM" ? this.detail.priceM : this.detail.priceL;
@@ -120,34 +156,22 @@ export default {
   },
   methods: {
     //optionsをfirebaseから取得
+    //"トッピングリスト"
     async getOptions() {
       const toppingListRef = firebase.firestore().collection("options");
-      console.log("トッピングリスト", toppingListRef); //OK
       const snapshot = await toppingListRef.get();
-      console.log("スナップショット", snapshot);
 
       snapshot.forEach((doc) => {
         const topping = { ...doc.data() };
-        console.log("でて！！！", topping);
         this.options.push(topping);
       });
-      console.log("optionsの中身", this.options);
     },
     async click() {
-      console.log("サイズ〜〜〜", this.size);
-      console.log("ここ追加したい", this.detail);
       this.detail.price = this.total;
-      console.log("detail追加された？", this.detail);
-      
       this.detail.orderToppingList = this.choiceOptions;
 
-      console.log("チョイスオプション",this.detail);
       //カートに追加
       firebase.firestore().collection("orderItems").add(this.detail);
-      // firebase
-      //   .firestore()
-      //   .collection("orderItems")
-      //   .add({orderToppingList:this.choiceOptions});
     },
 
     toppingTotal() {
