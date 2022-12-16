@@ -83,12 +83,7 @@ const routes = [
     component: () => import("../views/SignUp.vue"),
     meta: { requireAuth: true },
   },
-  {
-    path: "/mypage",
-    name: "mypage",
-    component: () => import("../views/MyPage.vue"),
-    meta: { requireAuth: true },
-  },
+
 ];
 
 const router = createRouter({
