@@ -66,7 +66,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((result) => {
-          console.log("サクセス！", result);
+          console.log("succes", result);
           console.log("USER", result.user);
 
           //保存したいフィールド
@@ -83,7 +83,7 @@ export default {
           this.$router.push("/home");
         })
         .catch((error) => {
-          console.log("エラーー", error);
+          console.log("err", error);
           this.errorMessage = "ログインに失敗しました";
           this.email = "";
           this.password = "";
@@ -96,9 +96,9 @@ export default {
   mounted() {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        console.log("ログイン!!!!!!!");
+        console.log("login");
       } else {
-        console.log("ログアウト!!!!!!");
+        console.log("logout");
       }
     });
   },

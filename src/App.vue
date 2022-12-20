@@ -1,8 +1,6 @@
 <template>
   <Header />
-  <!-- <div class="flex flex-col min-h-screen "> -->
   <router-view class="flex-grow"/>
-  <!-- </div> -->
   <Footer />
 </template>
 
@@ -34,10 +32,6 @@ nav {
   a {
     font-weight: bold;
     color: #2c3e50;
-
-    // &.router-link-exact-active {
-    //   color: #1e88b2;
-    
   }
 }
 </style>

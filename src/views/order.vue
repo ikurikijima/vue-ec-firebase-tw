@@ -108,10 +108,10 @@ export default {
     snapshot.forEach((doc) => {
       const data = { ...doc.data() };
       data.id = doc.id;
-      console.log("はい", data); //OK
+      console.log("data", data); //OK
       this.orderItems.push(data);
     });
-    console.log("IDとは", this.orderItems);
+    console.log("ID", this.orderItems);
   },
   computed: {
     // 合計金額をtotalに格納
@@ -125,16 +125,6 @@ export default {
     },
   },
   methods: {
-    //IDを取得してか削除したかった
-    // getIndex(index) {
-    //   this.deleteId = this.items[index].id
-    //   deleteItem();
-    // },
-
-    // deleteItem(deleteId){
-    //   firebase.firestore().collection("orderItems").doc(this.deleteId).delete()
-    // }
-    //orderItems.id　を消したい
     totalPrice: function () {
       this.total = 0;
       console.log(this.orderItems);
@@ -147,13 +137,11 @@ export default {
     async onclickDelete(id, index) {
       // console.log("ID", this.orderItems[0]);
       const itemm = this.orderItems.filter((item) => {
-        // console.log("ここ",item);
         if (item.id === id) {
           return item.id;
         }
       });
       const docId = itemm[0].id;
-      console.log("ああああああああ", docId);
 
       await firebase
         .firestore()
@@ -172,10 +160,6 @@ export default {
         this.total += orderItem.subTotal;
       });
       this.orderItems.splice(index, 1);
-      // this.total = 0;
-      // this.orderItems.forEach((cartItem) => {
-      //   this.total += cartItem.subTotal;
-      // });
     },
   },
 };
