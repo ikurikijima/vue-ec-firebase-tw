@@ -27,7 +27,6 @@
 export default {
   data() {
     return {
-      // auth: firebase.auth().currentUser.email,
       authenticatedUser:"",
       logintoggle:true,
     }

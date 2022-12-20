@@ -139,35 +139,14 @@ export default {
     },
   },
   methods: {
-    //IDを取得してか削除したかった
-    // getIndex(index) {
-    //   this.deleteId = this.items[index].id
-    //   deleteItem();
-    // },
-
-    // deleteItem(deleteId){
-    //   firebase.firestore().collection("orderItems").doc(this.deleteId).delete()
-    // }
-    // totalPrice: function () {
-    //   this.total = 0;
-    //   console.log(this.orderItems);
-    //   this.orderItems.map((data) => {
-    //     this.total += data.subTotal;
-    //   });
-    //   return this.total;
-    // },
-    //orderItems.id　を消したい
-
     async onclickDelete(id, index) {
       // console.log("ID", this.orderItems[0]);
       const itemm = this.orderItems.filter((item) => {
-        console.log("ここ？？？", item);
         if (item.id === id) {
           return item.id;
         }
       });
       const docId = itemm[0].id;
-      console.log("ああああああああ", docId);
 
       await firebase
         .firestore()
@@ -175,10 +154,10 @@ export default {
         .doc(docId)
         .delete()
         .then(function () {
-          console.log("Document successfully deleted!");
+          console.log("deleted!");
         })
         .catch(function (error) {
-          console.error("Error removing document: ", error);
+          console.error("Error:", error);
         });
 
       this.total = 0;
@@ -186,10 +165,6 @@ export default {
         this.total += orderItem.subTotal;
       });
       this.orderItems.splice(index, 1);
-      // this.total = 0;
-      // this.orderItems.forEach((cartItem) => {
-      //   this.total += cartItem.subTotal;
-      // });
     },
   },
 };
@@ -206,7 +181,6 @@ export default {
   border-radius: 10%;
   border: none;
   padding: 3px;
-  /* margin-left: 20px; */
   width: 50px;
 }
 
@@ -215,9 +189,7 @@ export default {
 }
 
 #size {
-  /* background-color: #ecc4bd; */
   padding: 1px;
-  /* border: solid #ecc4bd; */
   border-radius: 30%;
   line-height: 1.9;
   color: rgb(0, 0, 0);

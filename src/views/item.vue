@@ -85,9 +85,7 @@
 </template>
 
 <script>
-// import axios from "axios";
 import ToppingList from "../components/ToppingList.vue";
-
 import firebase from "@/firebase/firebase";
 
 export default {
@@ -121,20 +119,17 @@ export default {
     const idRef = firebase.firestore().collection("items").doc(this.id);
     console.log("idRef", idRef); //OK
     const snapshot = await idRef.get();
-    // if(!idDoc.exists){
-    //   this.$router.push("/home");
-    // // }
+
     console.log("snapshot", snapshot);
 
     this.detail = snapshot.data();
     console.log("detail", this.detail);
 
-    // this.detail = idDoc.data();
   },
   mounted() {
     this.toppingTotal();
     this.getOptions();
-    //ここ消す↓
+
     this.size === "priceM" ? this.detail.priceM : this.detail.priceL;
   },
   async created() {
@@ -144,15 +139,13 @@ export default {
     const idRef = firebase.firestore().collection("items").doc(this.id);
     console.log("idRef", idRef); //OK
     const snapshot = await idRef.get();
-    // if(!idDoc.exists){
-    //   this.$router.push("/home");
-    // // }
+  
     console.log("snapshot", snapshot);
 
     this.detail = snapshot.data();
     console.log("detail", this.detail);
 
-    // this.detail = idDoc.data();
+
   },
   methods: {
     //optionsをfirebaseから取得
