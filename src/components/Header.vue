@@ -15,13 +15,7 @@
       <router-link to="/login" class="mr-5 text-white hover:text-gray-200">Login</router-link>
     </nav>
      <div>ようこそ　<span class="font-semibold">{{authenticatedUser ? auth && auth.displayName : "ゲスト"}}</span>　さん</div>
-     <!-- <router-link to="/login">
-    <button v-show="logintoggle" class="mx-4 inline-flex items-center bg-red-2 border-0 py-1 px-3 focus:outline-none hover:bg-gray-400 rounded text-base mt-4 md:mt-0">login
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-        <path d="M5 12h14M12 5l7 7-7 7"></path>
-      </svg>
-    </button>
-    </router-link> -->
+
   </div>
 </header>
 
@@ -49,14 +43,13 @@ export default {
   },
   mounted() {
     //ログインしていればthis.authにデータが格納される
-
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
-      console.log("LOGIN");
+      //ログインOKだった場合
       this.auth = JSON.parse(sessionStorage.getItem("user"))
       this.authenticatedUser = true;
     } else {
-      console.log("LOGOUT");
+      //ログインNGだった場合
       this.authenticatedUser = false;
     }
   })

@@ -97,18 +97,12 @@
       </div>
 </section>
   </div>
-
-  <!-- <Order /> -->
 </template>
 
 <script>
 import firebase from "@/firebase/firebase";
-import Order from "@/components/Order.vue";
-
 export default {
-  // components: {
-  //   Order,
-  // },
+
   data() {
     return {
       // カートに追加した商品
